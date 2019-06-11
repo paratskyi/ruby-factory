@@ -68,12 +68,12 @@ class Factory
         end
       end
 
-      def each(&block)
-        instance_variables.map { |attribute| block.call(instance_variable_get(attribute)) }
+      def each()
+        instance_variables.map { |attribute| yield(instance_variable_get(attribute)) }
       end
 
-      def each_pair(&block)
-        instance_variables.map { |attribute| block.call(attribute.to_s.delete('@'), instance_variable_get(attribute)) }
+      def each_pair()
+        instance_variables.map { |attribute| yield(attribute.to_s.delete('@'), instance_variable_get(attribute)) }
       end
 
       def length
@@ -84,9 +84,9 @@ class Factory
         instance_variables.map { |attribute| attribute.to_s.delete('@').to_sym }
       end
 
-      def select(&block)
+      def select()
         result = instance_variables.map do |attribute|
-          instance_variable_get(attribute) if block.call(instance_variable_get(attribute))
+          instance_variable_get(attribute) if yield(instance_variable_get(attribute))
         end
         result.compact
       end
