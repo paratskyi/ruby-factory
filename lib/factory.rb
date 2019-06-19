@@ -61,18 +61,18 @@ class Factory
 
       def dig(key, *rest)
         value = self[key]
-        if value.nil? || rest.empty?
+        if value.nil?
           value
         elsif value.respond_to?(:dig)
           value.dig(*rest)
         end
       end
 
-      def each()
+      def each
         instance_variables.map { |attribute| yield(instance_variable_get(attribute)) }
       end
 
-      def each_pair()
+      def each_pair
         instance_variables.map { |attribute| yield(attribute.to_s.delete('@'), instance_variable_get(attribute)) }
       end
 
@@ -84,7 +84,7 @@ class Factory
         instance_variables.map { |attribute| attribute.to_s.delete('@').to_sym }
       end
 
-      def select()
+      def select
         result = instance_variables.map do |attribute|
           instance_variable_get(attribute) if yield(instance_variable_get(attribute))
         end
