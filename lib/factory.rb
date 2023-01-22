@@ -23,7 +23,6 @@ class Factory
     else
       create_class(@arguments, &block)
     end
-    # puts self.constants
   end
 
   def self.create_class(arguments, &block)
